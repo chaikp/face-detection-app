@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import Particles from 'react-particles-js';
 import clarifai from 'clarifai';
-import Navigation from './components/navigation/Navigation';
+//import Navigation from './components/navigation/Navigation';
 import Logo from './components/logo/Logo';
-import Rank from './components/rank/Rank';
-import SignIn from './components/signIn/SignIn';
-import Register from './components/register/Register';
+//import Rank from './components/rank/Rank';
+//import SignIn from './components/signIn/SignIn';
+//import Register from './components/register/Register';
 import ImageLinkForm from './components/imageLinkForm/ImageLinkForm';
 import FaceRecognition from './components/faceRecognition/FaceRecognition';
 import './App.css';
@@ -34,7 +34,8 @@ class App extends Component {
       imgURL: 'https://samples.clarifai.com/face-det.jpg',
       clarifaiFaces: [],
       route: 'home',
-      isSignedIn: true
+      isSignedIn: true,
+      isLoading: false
     }
   }
 
@@ -56,7 +57,10 @@ class App extends Component {
       }
     })
     
-    this.setState({clarifaiFaces: clarifaiFaces})
+    this.setState({
+      clarifaiFaces: clarifaiFaces,
+      isLoading: false
+    })
   }
 
   onInputChange = (event) => {
@@ -68,6 +72,7 @@ class App extends Component {
     
     this.setState({
       imgURL: this.state.input,
+      isLoading: true,
       clarifaiFaces: []
     })
 
@@ -92,33 +97,34 @@ class App extends Component {
   }
 
   render() {
-    const {input, imgURL, clarifaiFaces, route, isSignedIn} = this.state
+    const {input, imgURL, clarifaiFaces, route, isSignedIn, isLoading} = this.state
     return (
       <div className="App">
         <Particles className='particles' params={particlesOptions} />
         <div id='header' className='mt2 ml3 mr3' style={{display: 'flex', justifyContent: 'space-between'}}>
           <Logo />
-          <Navigation onRouteChange={this.onRouteChange} isSignedIn={isSignedIn} />
+          { /*<Navigation onRouteChange={this.onRouteChange} isSignedIn={isSignedIn} />*/ }
         </div>
         { 
-          route === 'home' 
-          ? <div>
-              <Rank />
+          //route === 'home' 
+          //? 
+            <div>
+              {/*<Rank />*/}
               <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} linkValue={input} />
-              <FaceRecognition imgURL={imgURL} bounding_boxes={clarifaiFaces} />
-              <div id="spacer" className="center ma cf" style={{height: '100px'}}></div>
+              <FaceRecognition imgURL={imgURL} bounding_boxes={clarifaiFaces} isLoading={isLoading} />
             </div>
-          : 
-          (
-            route === 'signin' || route === 'signout'
-            ? <SignIn onRouteChange={this.onRouteChange} />   
-            : <Register onRouteChange={this.onRouteChange} />
-          )
+  //        : 
+  //        (
+  //          route === 'signin' || route === 'signout'
+  //          ? <SignIn onRouteChange={this.onRouteChange} />   
+  //          : <Register onRouteChange={this.onRouteChange} />
+  //        )
         }      
         <div className="fixed bg-black footer bottom-0 left-0 right-0">
           <p className="white">
             Created using <a href="https://reactjs.org/">ReactJS</a>, {" "}  
-            <a href="https://nodejs.org/en/">NodeJS</a>, and Face Detection API by
+            { /*<a href="https://nodejs.org/en/">NodeJS</a>,*/ } 
+            Face Detection API by
             <a href="https://clarifai.com/models/face-detection-image-recognition-model-a403429f2ddf4b49b307e318f00e528b-detection"> Clarifai </a>
           </p>
         </div>

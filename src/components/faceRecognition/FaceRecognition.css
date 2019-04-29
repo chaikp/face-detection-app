@@ -4,3 +4,12 @@
   border-width: 3px;
   border-color: blue;
 }
+
+.loading {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.loadingImg {
+  border-style: none;
+}
